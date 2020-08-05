@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 class HomePageLocators(object):
     """Search locator"""
-    SEARCH_BUTTON = (By.NAME, 'btnK')
+    SEARCH_BUTTON = (By.XPATH, '//*[@id="tsf"]/div[2]/div[1]/div[3]/center/input[1]')
     INPUT_AREA = (By.NAME, 'q')
     VOICE_BUTTON=(By.XPATH, '//*[@id="tsf"]/div[2]/div[1]/div[1]/div/div[3]/div[2]')
     IMAGE_BUTTON = (By.XPATH, '//*[@id="gbw"]/div/div/div[1]/div[2]/a')
