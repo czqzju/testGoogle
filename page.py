@@ -34,13 +34,13 @@ class HomePage(BasePage):
         except Exception as e:
             pass
 
-        time.sleep(3)
+
         engine = pyttsx3.init()
 
         engine.say(content)
 
         engine.runAndWait()
-        time.sleep(10)
+        time.sleep(3)
 
     def click_image_button(self):
         element = self.driver.find_element(*HomePageLocators.IMAGE_BUTTON)

@@ -9,7 +9,7 @@ class TestGoogle(unittest.TestCase):
 
     def setUp(self):
         self.chrome_options = Options()
-        # self.chrome_options.add_argument("--headless")
+        self.chrome_options.add_argument("--headless")
         self.driver = webdriver.Chrome('webdrivers/chromedriver', options=self.chrome_options)
         self.driver.get("https://www.google.co.nz")
         self.main_page = page.HomePage(self.driver)
