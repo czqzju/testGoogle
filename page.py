@@ -1,7 +1,8 @@
 from locators import HomePageLocators
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+import pyttsx3
+import time
 
 class BasePage(object):
 
@@ -27,24 +28,36 @@ class HomePage(BasePage):
 
     def voice_input_content(self, content):
         self.driver.find_element(*HomePageLocators.VOICE_BUTTON).click()
-        content.play()
+        try:
+            alert = self.driver.switch_to_alert()
+            alert.accept()
+        except Exception as e:
+            pass
+
+        time.sleep(3)
+        engine = pyttsx3.init()
+
+        engine.say(content)
+
+        engine.runAndWait()
+        time.sleep(10)
 
     def click_image_button(self):
         element = self.driver.find_element(*HomePageLocators.IMAGE_BUTTON)
         element.click()
         try:
-            element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(*HomePageLocators.IMAGE_INPUT_BUTTON)
+            element_input = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located(HomePageLocators.IMAGE_INPUT_BUTTON)
             )
-            element.click()
+            element_input.click()
         except Exception as e:
             # log the exception e
-            self.driver.quit()
+            self.driver.close()
 
     def image_url_input(self, content):
         try:
             element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(*HomePageLocators.IMAGE_URL_INPUT)
+                EC.presence_of_element_located(HomePageLocators.IMAGE_URL_INPUT)
             )
             element.send_keys(content)
         except Exception as e:
@@ -67,7 +80,7 @@ class SearchResultsPage(BasePage):
     def check_image_search_result(self):
         try:
             element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(*HomePageLocators.IMAGE_RESULT)
+                EC.presence_of_element_located(HomePageLocators.IMAGE_RESULT)
             )
             return True
         except Exception as e:
